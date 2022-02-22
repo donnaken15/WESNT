@@ -211,7 +211,7 @@ Vec4 A,B,C;
 Vec4*Vec4Add(Vec4*VecRes,Vec4*V1,Vec4*V2)
 {
 	if (!VecRes || !V1 || !V2)
-		return;
+		return 0;
 	if (!(__EXTNS[0] & CPUID_FEAT_EDX_SSE)
 		|| ((int)VecRes & 0xF || (int)V1 & 0xF || (int)V2 & 0xF))
 	{

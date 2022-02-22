@@ -6,9 +6,11 @@
  * Author: Wesley
  * License: MIT (may change) \
  * (i might be too protective of my creations, \
- *  especially when i worked hard on this)
+ *  especially when i worked hard on this) \
+ * (well a video did get stolen from me \
+ *  netting 10 million views uncredited)
  *
- * Dependencies: C standard library, Bitstream
+ * Dependencies: C standard library, Bitstreams
  *
  * Lazy copy from testing code
  * Also messy
@@ -16,15 +18,16 @@
  * Compression and decompression
  * is about 300 lines
  *
- * TODO: Decompression is slow
+ * massive TODO: Decompression is slow
  * Iterate through symbol codes and
  * their lengths instead of brute force
  * through i < 65536 & j < 16
  * Might require multibit bitstr_get
  *
- * maybe FIX: Allocating 256 nodes twice (*nodes,*tree) in HFM_compress
+ * maybe FIX: Allocating 256 nodes twice (*tempdata,*nodes,*tree) in HFM_compress
+ * could use a pointer array or something
  *
- * FIX: one or two files crash with this
+ * FIX: one or two specific files crash with this
  *
  * Worked on from about October 2021
  * to November/December 2021
@@ -183,7 +186,7 @@ _HFM_DATA HFM_compress(const char*data,size_t size)
 			{
 				if(tempdata[i].frequency == j)
 				{
-					nodes[nodeplace] = tempdata[i];
+					nodes[nodeplace] = tempdata[i]; // aaaaaaaaa
 					nodes[nodeplace].symbol = i;
 					nodeplace++;
 				}

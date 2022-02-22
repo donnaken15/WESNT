@@ -124,3 +124,4 @@ void bitstr_print (char*bits, unsigned int count)
 		printf("%u",bitstr_get(bits,i));
 }
 #endif
+
