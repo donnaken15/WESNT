@@ -7,8 +7,9 @@
  * License: GPLv3
  *
  * Enable or disable use of
- * CPU extensions by detecting
- * if your PC supports them
+ * CPU extension methods by
+ * detecting if your PC
+ * supports them
  *
  * Dependencies: CPUID
  *
@@ -202,9 +203,13 @@ int GetExts()
 	return 1;
 }
 
+typedef struct {
+	float x, y, z;
+} __VEC3_tag;
+
 // ez wikipedia example thing
 typedef struct {
-	float w, x, y, z;
+	float x, y, z, w;
 } __VEC4_tag;
 #define Vec4 __VEC4_tag __attribute__((aligned(16)))
 Vec4 A,B,C;
@@ -234,7 +239,8 @@ Vec4*Vec4Add(Vec4*VecRes,Vec4*V1,Vec4*V2)
 			mov eax, [ebp+8]  ; VecRes
 			movaps [eax], xmm0
 		*/
-			"  .byte    0x8b, 0x45, 0xc, 0xf, 0x28, 0x0, 0x8b, 0x45, 0x10, 0xf, 0x58, 0x0, 0x8b, 0x45, 0x8, 0xf, 0x29, 0x0\n"
+			"  .byte    0x8b, 0x45, 0xc, 0xf, 0x28, 0x0, 0x8b, 0x45,"
+						"0x10, 0xf, 0x58, 0x0, 0x8b, 0x45, 0x8, 0xf, 0x29, 0x0\n"
 			: // unknown opcode "movaps" smh
 			:
 			:"memory", "eax"
@@ -274,10 +280,10 @@ int _start()
 	puts("");
 	if (__EXTNS[0] & CPUID_FEAT_EDX_SSE)
 		puts("got sse");
-	B.w = 0.1; C.w = 0.9;
 	B.x = 0.2; C.x = 0.8;
 	B.y = 0.3; C.y = 0.7;
 	B.z = 0.4; C.z = 0.6;
+	B.w = 0.1; C.w = 0.9;
 	Vec4Add(&A,&B,&C);
 	return 0;
 }
