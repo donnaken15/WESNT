@@ -8,7 +8,7 @@ int bitfield_0 = 0b10001110 | (0b10010100 << 8) | (0b10101011 << 16) | (0b010010
 int bitfield_1 = 0;
 int bitfield_2 = 0b00110100 | (0b01110001 << 8) | (0b01100100 << 16) | (0b00111000 << 24);
 
-int main()
+main()
 {
 	printf("Hello, World!\n");
 	printf("shiver in eternal darkness\n");

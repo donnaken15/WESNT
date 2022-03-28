@@ -7,7 +7,7 @@
 FILE*sinTable;
 double x, pi = 3.14159265359, y, z = 2000;
 float  w;
-int _start()
+_start()
 {
 	sinTable = fopen("sintable.bin","wb");
 	for(y = 0; y < z; y++)

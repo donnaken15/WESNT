@@ -8,9 +8,10 @@
  * (i might be too protective of my creations, \
  *  especially when i worked hard on this) \
  * (well a video did get stolen from me \
- *  netting 10 million views uncredited)
+ *  netting 10 million views uncredited, \
+ *  and a few extra hundred thousand...)
  *
- * Dependencies: C standard library, Bitstreams
+ * Dependencies: C library, Bitstreams
  *
  * Lazy copy from testing code
  * Also messy
@@ -490,7 +491,7 @@ _HFM_DATA randomC;
 _HFM_FILE randomF;
 char*randomD;
 
-int _start()
+_start()
 {
 	puts("Huffman test");
 	puts(__HFM_TEST_wesleyS);
@@ -501,7 +502,7 @@ int _start()
 	__HFM_TEST_wesleyD = HFM_decompress(__HFM_TEST_wesleyC);
 	puts(__HFM_TEST_wesleyD);
 	
-	puts("Load file");
+	puts("Load file: \"HFM.C\"");
 	randomFF = fopen(__FILE__,"rb");
 	fseek(randomFF,0,SEEK_END);
 	randomL = ftell(randomFF);
@@ -516,6 +517,25 @@ int _start()
 	puts("\nWriting to file");
 	randomF = HFM_tofile(randomC);
 	HFM_fwrite(randomF, __FILE__".hfm");
+	puts("\nDECOMPRESSED:");
+	randomD = HFM_decompress(randomC);
+	puts(randomD);
+	
+	puts("Load file: \"HFM.EXE\"");
+	randomFF = fopen("hfm.exe","rb");
+	fseek(randomFF,0,SEEK_END);
+	randomL = ftell(randomFF);
+	rewind(randomFF);
+	random = (char*)malloc(randomL);
+	fread(random,1,randomL,randomFF);
+	fclose(randomFF);
+	puts(random);
+	puts("COMPRESSED:");
+	randomC = HFM_compress(random,randomL);
+	puts(randomC.data);
+	puts("\nWriting to file");
+	randomF = HFM_tofile(randomC);
+	HFM_fwrite(randomF, "hfm.exe.hfm");
 	puts("\nDECOMPRESSED:");
 	randomD = HFM_decompress(randomC);
 	puts(randomD);

@@ -27,6 +27,7 @@
 // TODO: use bit test ops if possible (BT,BTS,BTR,BTC)
 // actually that's apparently slower than AND,OR,XOR
 // wtf, but i'd kind of understand why
+// unless i read it as being slower for memory values
 
 // massive TODO:
 // dont operate bitwise on every single bit for multibyte functions
@@ -50,15 +51,15 @@ inline char bitstr_get   (char*bits, unsigned int bit) {
 	return (bits[bit>>3] >> (7-(bit&7)) & 1);
 }
 //   BITSTREAM: SET
-inline void bitstr_set   (char*bits, unsigned int bit) {
+inline bitstr_set   (char*bits, unsigned int bit) {
 	bits[bit>>3] |= (1) << (7-(bit&7));
 }
 //   BITSTREAM: CLEAR
-inline void bitstr_clear (char*bits, unsigned int bit) {
+inline bitstr_clear (char*bits, unsigned int bit) {
 	bits[bit>>3] &= ~(1 << (7-(bit&7)));
 }
 //   BITSTREAM: TOGGLE
-inline void bitstr_toggle(char*bits, unsigned int bit) {
+inline bitstr_toggle(char*bits, unsigned int bit) {
 	bits[bit>>3] ^= 1 << (7-(bit&7));
 }
 #endif
@@ -70,7 +71,7 @@ inline void bitstr_toggle(char*bits, unsigned int bit) {
 // first method looks better or something
 //
 //   BITSTREAM: GET MULTIBYTE
-int  bitstr_get_a   (char*bits, unsigned int bit, unsigned int len) {
+bitstr_get_a   (char*bits, unsigned int bit, unsigned int len) {
 	int retval = 0;
 	int curbit = 0;
 	for (int i = 0; i < len; i++)
@@ -81,7 +82,7 @@ int  bitstr_get_a   (char*bits, unsigned int bit, unsigned int len) {
 	return retval;
 }
 //   BITSTREAM: SET MULTIBYTE
-void bitstr_set_a   (char*bits, unsigned int bit, unsigned val, unsigned int len) {
+bitstr_set_a   (char*bits, unsigned int bit, unsigned val, unsigned int len) {
 	int curbit = 0;
 	int onoroff = 0;
 	int bitplace = 0;
@@ -97,7 +98,7 @@ void bitstr_set_a   (char*bits, unsigned int bit, unsigned val, unsigned int len
 	}
 }
 //   BITSTREAM: CLEAR MULTIBYTE
-void bitstr_clear_a (char*bits, unsigned int bit, unsigned int len) {
+bitstr_clear_a (char*bits, unsigned int bit, unsigned int len) {
 	int curbit = 0;
 	for (int i = 0; i < len; i++)
 	{
@@ -106,7 +107,7 @@ void bitstr_clear_a (char*bits, unsigned int bit, unsigned int len) {
 	}
 }
 //   BITSTREAM: TOGGLE MULTIBYTE
-void bitstr_toggle_a(char*bits, unsigned int bit, unsigned int len) {
+bitstr_toggle_a(char*bits, unsigned int bit, unsigned int len) {
 	// should add argument to xor using val
 	int curbit = 0;
 	for (int i = 0; i < len; i++)
@@ -118,7 +119,7 @@ void bitstr_toggle_a(char*bits, unsigned int bit, unsigned int len) {
 
 //#define BITSTR_STDIO
 #ifdef BITSTR_STDIO
-void bitstr_print (char*bits, unsigned int count)
+bitstr_print (char*bits, unsigned int count)
 {
 	for (int i = 0; i < count; i++)
 		printf("%u",bitstr_get(bits,i));
